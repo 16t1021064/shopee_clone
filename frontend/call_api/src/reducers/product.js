@@ -1,5 +1,5 @@
 import * as productConstants from '../constants/product'
-import { toastError, toastSuccess } from '../helpers/toastHelper';
+import { toastError, toastSuccess } from '../helpers/toastHelper'
 
 const initialState = {
     productList: []
@@ -20,8 +20,10 @@ const reducer = (state = initialState, action) => {
             }
         }
         case productConstants.FETCH_PRODUCT_FAILED: {
+            console.log(1);
             const { error } = action.payload;
             toastError(error)
+            console.log(2);
             return {
                 ...state,
                 productList: []
@@ -34,6 +36,26 @@ const reducer = (state = initialState, action) => {
                 productList: data
             }
         }
+        case productConstants.DELETE_PRODUCT: {
+            return {
+                ...state
+            }
+        }
+        case productConstants.DELETE_PRODUCT_SUCCESS: {
+            const { product } = action.payload;
+            toastSuccess('Xóa mới công việc thành công')
+            return {
+                ...state,
+                productList: product.concat(state.productList)
+            }
+        }
+        case productConstants.DELETE_PRODUCT_FAILED: {
+            const { error } = action.payload;
+            toastError(error)
+            return {
+                ...state
+            }
+        }
         case productConstants.ADD_PRODUCT: {
             return {
                 ...state
@@ -42,7 +64,6 @@ const reducer = (state = initialState, action) => {
         case productConstants.ADD_PRODUCT_SUCCESS: {
             const { product } = action.payload;
             toastSuccess('Thêm mới công việc thành công')
-
             return {
                 ...state,
                 productList: product.concat(state.productList)

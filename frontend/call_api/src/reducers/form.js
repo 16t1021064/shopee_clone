@@ -15,6 +15,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 showForm: false,
+                title: ''
             }
         }
         case types.CHANGE_FORM_TITLE: {

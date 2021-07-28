@@ -27,15 +27,19 @@ class ProductForm extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-        this.form.validateAll();
-        var product = {
-            name: this.state.name,
-            rating: this.state.rating,
-            price: this.state.price,
-            photo: this.state.photo
+        const { addProduct, hideForm } = this.props;
+        this.form.validateAll()
+        if (this.checkBtn.context._errors.length === 0) {
+            var product = {
+                name: this.state.name,
+                rating: this.state.rating,
+                price: this.state.price,
+                photo: this.state.photo
+            }
+            addProduct(product);
+            hideForm();
         }
-        const { addProduct } = this.props;
-        addProduct(product);
+
     }
     onChangeHandler(event) {
         const { target } = event;

@@ -54,3 +54,21 @@ export const addProductFailed = (error) => ({
         error
     }
 })
+export const deleteProductSuccess = (id) => ({
+    type: productConstants.DELETE_PRODUCT_SUCCESS,
+    payload: {
+        id
+    }
+})
+export const deleteProductFailed = (error) => ({
+    type: productConstants.DELETE_PRODUCT_FAILED,
+    payload: {
+        error
+    }
+})
+export const deleteProduct = (id) => ({
+    type: productConstants.DELETE_PRODUCT,
+    payload: {
+        id
+    }
+})
