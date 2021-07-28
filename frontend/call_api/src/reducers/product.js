@@ -27,6 +27,13 @@ const reducer = (state = initialState, action) => {
                 productList: []
             }
         }
+        case productConstants.FILTER_PRODUCT_SUCCESS: {
+            const { data } = action.payload;
+            return {
+                ...state,
+                productList: data
+            }
+        }
         default: return state;
     }
 }

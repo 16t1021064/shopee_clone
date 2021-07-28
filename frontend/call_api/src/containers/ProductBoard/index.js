@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import * as productActions from '../../actions/product'
 import * as formActions from '../../actions/form'
 import ProductForm from '../ProductForm'
+import SearchBox from '../SearchBox'
 
 class ProductBoard extends Component {
 
@@ -15,10 +16,13 @@ class ProductBoard extends Component {
     }
     renderForm = () => {
         let xhtml = null;
-        const { showForm } = this.props;
+        const { showForm, formActionCreators } = this.props;
+        const { changeFormTitle } = formActionCreators;
         if (showForm) {
+            changeFormTitle('Thêm mới');
+            const { title } = this.props;
             xhtml = (
-                <ProductForm />
+                <ProductForm title={title} />
             )
         } else {
             xhtml = (
@@ -38,6 +42,7 @@ class ProductBoard extends Component {
         const { productList } = this.props
         return (
             <div className="row">
+                <SearchBox />
                 {
                     this.renderForm()
                 }
@@ -49,7 +54,8 @@ class ProductBoard extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         productList: state.product.productList,
-        showForm: state.form.showForm
+        showForm: state.form.showForm,
+        title: state.form.title
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {

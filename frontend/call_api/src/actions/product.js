@@ -1,9 +1,11 @@
 import * as productConstants from '../constants/product'
 
-export const fetchProductList = () => {
+export const fetchProductList = (params = {}) => {
     return {
         type: productConstants.FETCH_PRODUCT,
-
+        payload: {
+            params
+        }
     }
 }
 export const fetchProductListSuccess = (data) => {
@@ -22,3 +24,15 @@ export const fetchProductListFailed = (error) => {
         }
     }
 }
+export const filterProduct = (keyword) => ({
+    type: productConstants.FILTER_PRODUCT,
+    payload: {
+        keyword
+    }
+})
+export const filterProductSuccess = (data) => ({
+    type: productConstants.FILTER_PRODUCT_SUCCESS,
+    payload: {
+        data
+    }
+})

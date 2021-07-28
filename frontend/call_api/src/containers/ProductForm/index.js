@@ -8,25 +8,18 @@ import Input from 'react-validation/build/input';
 import CheckButton from 'react-validation/build/button';
 const required = (value) => {
     if (isEmpty(value)) {
-        return <small className="form-text text-danger">This field is required</small>;
+        return <small className="form-text text-danger">Vui lòng điền trường còn trống</small>;
     }
 }
 const rating = (value) => {
-    if (value > 5 && value < 0) {
-        return <small className="form-text text-danger">Password must be at least 6 characters long</small>;
+    if (value < 0 || value > 5) {
+        return <small className="form-text text-danger">Đánh giá phải lớn hơn 0 và nhỏ hơn hoặc bằng 5</small>;
     }
 }
 class ProductForm extends Component {
     // onChange = (e) => {
     //     console.log(e.target.value);
     // }
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-        };
-    }
     onSubmit(e) {
         e.preventDefault();
 
@@ -35,34 +28,64 @@ class ProductForm extends Component {
             alert('success');
         }
     }
+    onCreateProduct = () => {
+
+    }
     render() {
-        const { formActionCreators } = this.props;
+        const { formActionCreators, title } = this.props;
         const { hideForm } = formActionCreators;
         return (
             <>
                 <div className="col-md-3"></div>
                 <div className="login-container col-md-6">
-                    <div id="output"></div>
-                    <div className="avatar"></div>
+                    <h2><span className="badge badge-primary">{title}</span></h2>
                     <div className="form-box">
                         <Form onSubmit={e => this.onSubmit(e)} ref={c => { this.form = c }}>
-                            <Input
-                                name="email"
-                                onChange={this.onChangeHandler}
-                                type="text"
-                                placeholder="Email"
-                                className="form-control"
-                                validations={[required]}
-                            />
-                            <Input
-                                name="password"
-                                onChange={this.onChangeHandler}
-                                type="password"
-                                placeholder="Password"
-                                className="form-control"
-                                validations={[required]}
-                            />
-                            <div className="float-left">
+                            <div className="form-group">
+                                <label htmlFor="name">Tên sản phẩm:</label>
+                                <Input
+                                    name="name"
+                                    onChange={this.onChangeHandler}
+                                    type="text"
+                                    placeholder="Tên sản phẩm"
+                                    className="form-control"
+                                    validations={[required]}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="rating">Xếp hạng:</label>
+                                <Input
+                                    name="rating"
+                                    onChange={this.onChangeHandler}
+                                    type="number"
+                                    placeholder="Xếp hạng:"
+                                    className="form-control"
+                                    validations={[required, rating]}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="price">Giá:</label>
+                                <Input
+                                    name="price"
+                                    onChange={this.onChangeHandler}
+                                    type="text"
+                                    placeholder="Giá"
+                                    className="form-control"
+                                    validations={[required]}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="photo">Link ảnh:</label>
+                                <Input
+                                    name="photo"
+                                    onChange={this.onChangeHandler}
+                                    type="text"
+                                    placeholder="Link ảnh"
+                                    className="form-control"
+                                    validations={[required]}
+                                />
+                            </div>
+                            <div className="float-right">
                                 <button className="btn btn-primary mr-2" type="submit">Lưu</button>
                                 <CheckButton style={{ display: 'none' }} ref={c => { this.checkBtn = c }} />
                                 <button className="btn btn-info btn-warning " onClick={hideForm}>Bỏ qua</button>

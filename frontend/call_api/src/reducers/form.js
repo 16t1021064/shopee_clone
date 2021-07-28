@@ -1,6 +1,7 @@
 import * as types from '../constants/form'
 const initialState = {
-    showForm: false
+    showForm: false,
+    title: ''
 };
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -14,6 +15,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 showForm: false,
+            }
+        }
+        case types.CHANGE_FORM_TITLE: {
+            return {
+                ...state,
+                title: action.payload.title
             }
         }
         default: return state;
