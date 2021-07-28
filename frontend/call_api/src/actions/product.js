@@ -36,3 +36,21 @@ export const filterProductSuccess = (data) => ({
         data
     }
 })
+export const addProduct = (product) => ({
+    type: productConstants.ADD_PRODUCT,
+    payload: {
+        product
+    }
+})
+export const addProductSuccess = (product) => ({
+    type: productConstants.ADD_PRODUCT_SUCCESS,
+    payload: {
+        product
+    }
+})
+export const addProductFailed = (error) => ({
+    type: productConstants.ADD_PRODUCT_FAILED,
+    payload: {
+        error
+    }
+})

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as productActions from '../../actions/product'
 import * as formActions from '../../actions/form'
-import ProductForm from '../ProductForm'
+import ProductForm from '../../components/ProductForm'
 import SearchBox from '../SearchBox'
 
 class ProductBoard extends Component {
@@ -16,13 +16,14 @@ class ProductBoard extends Component {
     }
     renderForm = () => {
         let xhtml = null;
-        const { showForm, formActionCreators } = this.props;
-        const { changeFormTitle } = formActionCreators;
+        const { showForm, formActionCreators, productActionCreators } = this.props;
+        const { changeFormTitle, hideForm } = formActionCreators;
+        const { addProduct } = productActionCreators
         if (showForm) {
             changeFormTitle('Thêm mới');
             const { title } = this.props;
             xhtml = (
-                <ProductForm title={title} />
+                <ProductForm title={title} hideForm={hideForm} addProduct={addProduct} />
             )
         } else {
             xhtml = (

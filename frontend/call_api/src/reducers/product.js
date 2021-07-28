@@ -1,5 +1,5 @@
 import * as productConstants from '../constants/product'
-import { toastError } from '../helpers/toastHelper';
+import { toastError, toastSuccess } from '../helpers/toastHelper';
 
 const initialState = {
     productList: []
@@ -32,6 +32,27 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 productList: data
+            }
+        }
+        case productConstants.ADD_PRODUCT: {
+            return {
+                ...state
+            }
+        }
+        case productConstants.ADD_PRODUCT_SUCCESS: {
+            const { product } = action.payload;
+            toastSuccess('Thêm mới công việc thành công')
+
+            return {
+                ...state,
+                productList: product.concat(state.productList)
+            }
+        }
+        case productConstants.ADD_PRODUCT_FAILED: {
+            const { error } = action.payload;
+            toastError(error)
+            return {
+                ...state
             }
         }
         default: return state;

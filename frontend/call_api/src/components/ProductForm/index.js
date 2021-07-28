@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as formActions from '../../actions/form'
 import { isEmpty } from 'validator';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
@@ -17,23 +14,38 @@ const rating = (value) => {
     }
 }
 class ProductForm extends Component {
-    // onChange = (e) => {
-    //     console.log(e.target.value);
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            rating: 0,
+            price: 0,
+            photo: ''
+        };
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
+    }
     onSubmit(e) {
         e.preventDefault();
-
         this.form.validateAll();
-        if (this.checkBtn.context._errors.length === 0) {
-            alert('success');
+        var product = {
+            name: this.state.name,
+            rating: this.state.rating,
+            price: this.state.price,
+            photo: this.state.photo
         }
+        const { addProduct } = this.props;
+        addProduct(product);
     }
-    onCreateProduct = () => {
-
+    onChangeHandler(event) {
+        const { target } = event;
+        const { value, name } = target;
+        this.setState({
+            [name]: value
+        })
     }
     render() {
-        const { formActionCreators, title } = this.props;
-        const { hideForm } = formActionCreators;
+        const { hideForm, title } = this.props;
         return (
             <>
                 <div className="col-md-3"></div>
@@ -97,11 +109,6 @@ class ProductForm extends Component {
         )
     }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        formActionCreators: bindActionCreators(formActions, dispatch)
-    }
-}
 
-export default connect(null, mapDispatchToProps)(ProductForm)
+export default ProductForm
 
