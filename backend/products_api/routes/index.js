@@ -38,4 +38,25 @@ router.post('/products', function (req, res, next) {
     }
   })
 });
+router.post('/add', function (req, res, next) {
+  const { name, rating, price, photo } = req.body;
+  pool.query('insert into  "Products" (name, rating, price, photo) values ($1,$2,$3,$4) RETURNING id', [name, rating, price, photo], (err, resp) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const id = resp.rows[0].id;
+      res.status(201).send([{ id, name, rating, price, photo }]);
+    }
+  })
+});
+router.delete('/delete/:id', function (req, res, next) {
+  const id = req.params.id;
+  pool.query('delete from "Products" where id = $1', [id], (err, resp) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(id);
+    }
+  })
+});
 module.exports = router;

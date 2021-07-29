@@ -12,7 +12,12 @@ export default class ProductItem extends Component {
         }
         return result;
     }
-
+    onDeleteHandler = (id) => {
+        const { deleteProduct } = this.props;
+        if (window.confirm('bạn có muốn xóa sản phẩm này không ?')) {
+            deleteProduct(id);
+        }
+    }
     render() {
         const { product } = this.props;
         return (
@@ -36,10 +41,16 @@ export default class ProductItem extends Component {
                     {/* Product actions*/}
                     <div className="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-center">
                         <div className="text-center mr-2"><button className="btn btn-primary">Sửa</button></div>
-                        <div className="text-center"><button className="btn btn-danger" href="/">Xóa </button></div>
+                        <div className="text-center">
+                            <button
+                                className="btn btn-danger"
+                                onClick={() => this.onDeleteHandler(product.id)}
+                            >
+                                Xóa
+                            </button></div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }

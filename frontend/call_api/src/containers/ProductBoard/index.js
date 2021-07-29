@@ -41,13 +41,14 @@ class ProductBoard extends Component {
     }
     render() {
         const { productList } = this.props
+        const { deleteProduct } = this.props.productActionCreators
         return (
             <div className="row">
                 <SearchBox />
                 {
                     this.renderForm()
                 }
-                <ProductList productList={productList} />
+                <ProductList productList={productList} deleteProduct={deleteProduct} />
             </div>
         )
     }

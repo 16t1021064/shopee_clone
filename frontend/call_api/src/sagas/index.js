@@ -1,8 +1,8 @@
 import { fork, call, take, put, delay, takeLatest } from 'redux-saga/effects'
-import { getList, addProduct } from '../apis/product';
+import { getList, addProduct, deleteProduct } from '../apis/product';
 import * as productTypes from '../constants/product'
 import { STATUS_CODE } from '../constants'
-import { fetchProductListFailed, fetchProductListSuccess, fetchProductList, addProductSuccess, addProductFailed } from '../actions/product';
+import { fetchProductListFailed, fetchProductListSuccess, fetchProductList, addProductSuccess, addProductFailed, deleteProductSuccess, deleteProductFailed } from '../actions/product';
 function* fetchProductListAction() {
     while (true) {
         const action = yield take(productTypes.FETCH_PRODUCT);
@@ -38,10 +38,22 @@ function* addProductSaga({ payload }) {
     }
     yield delay(500);
 }
-
+function* deleteProductSaga({ payload }) {
+    const { id } = payload;
+    const resp = yield call(deleteProduct, id);
+    const { data, status } = resp;
+    console.log(status);
+    if (status === STATUS_CODE.SUCCESS) {
+        yield put(deleteProductSuccess(data))
+    } else {
+        yield put(deleteProductFailed(data))
+    }
+    yield delay(500);
+}
 function* rootSaga() {
     yield fork(fetchProductListAction);
     yield takeLatest(productTypes.FILTER_PRODUCT, filterProductSaga)
     yield takeLatest(productTypes.ADD_PRODUCT, addProductSaga)
+    yield takeLatest(productTypes.DELETE_PRODUCT, deleteProductSaga)
 }
 export default rootSaga;

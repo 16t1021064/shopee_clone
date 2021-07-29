@@ -42,11 +42,12 @@ const reducer = (state = initialState, action) => {
             }
         }
         case productConstants.DELETE_PRODUCT_SUCCESS: {
-            const { product } = action.payload;
-            toastSuccess('Xóa mới công việc thành công')
+            const { id } = action.payload;
+            var idString = String(id)
+            toastSuccess('Xóa công việc thành công')
             return {
                 ...state,
-                productList: product.concat(state.productList)
+                productList: state.productList.filter(item => item.id !== idString)
             }
         }
         case productConstants.DELETE_PRODUCT_FAILED: {

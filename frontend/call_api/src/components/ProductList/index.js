@@ -4,7 +4,7 @@ import ProductItem from '../ProductItem'
 export default class ProductList extends Component {
 
     render() {
-        const { productList } = this.props;
+        const { productList, deleteProduct } = this.props;
         return (
             <section className="py-5">
                 <div className="container px-4 px-lg-5 mt-5">
@@ -12,7 +12,7 @@ export default class ProductList extends Component {
                         {
                             productList.map(product => {
                                 return (
-                                    <ProductItem key={product.id} product={product} />
+                                    <ProductItem key={product.id} product={product} deleteProduct={deleteProduct} />
                                 )
                             })
                         }
